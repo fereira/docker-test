@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+    db:
+        image: mysql:8.0
+        restart: always
+        container_name: mysql8-test
+        # values for environment are in a .env file 
+        environment:
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_DATABASE=${MYSQL_DATABASE_NAME}
+          - MYSQL_USER=${MYSQL_DATABASE_USER}
+          - MYSQL_PASSWORD=${MYSQL_DATABASE_PASSWORD}
+          - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+        ports:
+          - "${DATABASE_PORT}:3306"
+        volumes:
+          - './docker/db/data:/var/lib/mysql'
+          - './docker/db/my.cnf:/etc/mysql/conf.d/my.cnf'
+          - './docker/db/sql:/docker-entrypoint-initdb.d'
+    
